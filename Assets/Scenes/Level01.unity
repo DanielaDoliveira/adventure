@@ -382,8 +382,8 @@ GameObject:
   - component: {fileID: 2051298532}
   - component: {fileID: 2051298531}
   - component: {fileID: 2051298533}
-  - component: {fileID: 2051298535}
   - component: {fileID: 2051298534}
+  - component: {fileID: 2051298535}
   - component: {fileID: 2051298537}
   - component: {fileID: 2051298536}
   m_Layer: 0
@@ -498,6 +498,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  _attack: 0
 --- !u!114 &2051298535
 MonoBehaviour:
   m_ObjectHideFlags: 0
