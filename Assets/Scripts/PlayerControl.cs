@@ -12,6 +12,7 @@ public class PlayerControl : MonoBehaviour
     public float speed = 10f;
     private Vector2 _lastDirection;
     public bool _attack;
+    bool canAttack = true;
     void Start()
     {
         _animations = GetComponent<PlayerAnimations>();
@@ -31,6 +32,7 @@ public class PlayerControl : MonoBehaviour
     
              CheckAnimations();
        
+       
     }
 
    
@@ -41,19 +43,55 @@ public class PlayerControl : MonoBehaviour
         
     }
 
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (!_attack && canAttack  )
+        {
+                _attack = true;
+                _animations.SetAnimationAttacking(PLAYER_STATE.ATTACKING,_lastDirection,_attack);
+                StartCoroutine(CanAttack());
+            
+        }
+    }
+
+    public void FinishAttack()
+    {
+      
+        
+        if (_attack)
+        {
+          _animations.FinishAttack();
+            _attack = false;
+        }
+        
+    }
+
+    IEnumerator CanAttack()
+    {
+      
+        if (_attack)
+        {
+            canAttack = false;
+            yield return new WaitForSeconds(0.5f);
+            canAttack = true;
+        }
+            
+    }
     
     void CheckAnimations()
     {
      
-        if (_movement != Vector2.zero)
+        if (_movement != Vector2.zero && !_attack)
         {
-            _animations.SetAnimationMovement(PLAYER_STATE.WALKING,_lastDirection);
+            canAttack = false;
+            _animations.SetAnimationMovement(PLAYER_STATE.WALKING,_movement);
             _lastDirection = _movement;
             Debug.Log(_lastDirection);
         }
        
-        if (_movement == Vector2.zero)
+        if (_movement == Vector2.zero && !_attack)
         {
+            canAttack = true;
             _animations.SetAnimationIdle(PLAYER_STATE.IDLE,_lastDirection);
           
         }
