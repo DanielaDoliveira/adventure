@@ -4,5 +4,6 @@
         DEFAULT = 0,
         IDLE = 1,
         RUNNING = 2,
+        ATTACKING = 3,
             
     }
