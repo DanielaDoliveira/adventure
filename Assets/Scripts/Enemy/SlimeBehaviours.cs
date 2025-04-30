@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using UnityEngine;
 
 namespace Enemy
@@ -60,7 +61,7 @@ namespace Enemy
         }
         public IEnumerator KnockTime()
         {
-            _knockback.GetKnockedBack(PlayerControl.instance.transform,_knockbackThrust);
+            _knockback.GetKnockedBack(PlayerControl.Instance.transform,_knockbackThrust);
             yield return new WaitForSeconds(0.2f);
             _rigidbody.linearVelocity = Vector2.zero;
         }

@@ -1,4 +1,5 @@
 using System;
+using Player;
 using UnityEngine;
 
 public class ActiveInventory : MonoBehaviour
@@ -9,7 +10,7 @@ public class ActiveInventory : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-        _playerControl = new PlayerControl();
+       // _playerControl = new PlayerControl();
     }
 
     void Start()
