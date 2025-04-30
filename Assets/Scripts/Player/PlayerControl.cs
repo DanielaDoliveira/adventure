@@ -1,4 +1,4 @@
-using CommandPattern;
+using Player.CommandPattern;
 using Player.Singletons;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,17 +23,13 @@ namespace Player
          
         }
     
-        public void Move(InputAction.CallbackContext context)
-        {
-            _moveCommand.Execute(context.ReadValue<Vector2>());
-        }
+        public void Move(InputAction.CallbackContext context) => _moveCommand.Execute(context.ReadValue<Vector2>());
+        
 
         public void Attack(InputAction.CallbackContext context)
         {
             if (!PlayerSingleton.IsAttacking && PlayerSingleton.CanAttack )
-            {
                 _attackCommand.Execute(PlayerSingleton.LastDirection);
-            }
         }
  
   

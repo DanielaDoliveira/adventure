@@ -29,8 +29,7 @@ namespace Enemy
         }
         public IEnumerator DamageBehaviour()
         {
-       
-       
+            
             for (int i = 0; i < _flashCounter; i++)
             {
                 _material.SetFloat("_FlashAmount",1f);

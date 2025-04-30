@@ -5,14 +5,7 @@ namespace Player
 {
     public class PlayerAnimations : MonoBehaviour, IPlayerAnimations
     {
-        //
-        //
-        //
-        // public static PlayerAnimations Instance;
-        //
-        // private void Awake() => Instance = this;
-        //
-
+        
         public void SetAnimationMovement(LAYER_TYPE layer,Vector2 direction)
         {
             PlayerSingleton.Animator.SetFloat("x_mov",direction.x);
@@ -59,9 +52,6 @@ namespace Player
             PlayerSingleton.Animator.SetLayerWeight(2,0);
             PlayerSingleton.Animator.SetLayerWeight(3,0);
         }
-
-  
-
-    
+        
     }
 }
