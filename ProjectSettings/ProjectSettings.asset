@@ -764,19 +764,23 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Android: SORTIFY
-    EmbeddedLinux: SORTIFY
-    GameCoreXboxOne: SORTIFY
-    Nintendo Switch: SORTIFY
-    PS4: SORTIFY
-    PS5: SORTIFY
-    QNX: SORTIFY
-    ReservedCFE: SORTIFY
-    Standalone: SORTIFY;GASKELLGAMES;GASKELLGAMES_FOLDERSYSTEM
-    VisionOS: SORTIFY
-    WebGL: SORTIFY
-    XboxOne: SORTIFY
-    tvOS: SORTIFY
+    Android: SORTIFY;DOTWEEN
+    EmbeddedLinux: SORTIFY;DOTWEEN
+    GameCoreScarlett: DOTWEEN
+    GameCoreXboxOne: SORTIFY;DOTWEEN
+    LinuxHeadlessSimulation: DOTWEEN
+    Nintendo Switch: SORTIFY;DOTWEEN
+    PS4: SORTIFY;DOTWEEN
+    PS5: SORTIFY;DOTWEEN
+    QNX: SORTIFY;DOTWEEN
+    ReservedCFE: SORTIFY;DOTWEEN
+    Standalone: SORTIFY;GASKELLGAMES;GASKELLGAMES_FOLDERSYSTEM;DOTWEEN
+    VisionOS: SORTIFY;DOTWEEN
+    WebGL: SORTIFY;DOTWEEN
+    Windows Store Apps: DOTWEEN
+    XboxOne: SORTIFY;DOTWEEN
+    iPhone: DOTWEEN
+    tvOS: SORTIFY;DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

@@ -1,8 +1,7 @@
 
-using System;
-using System.Collections;
+using Enemy;
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
     public class EnemyLife: MonoBehaviour
     {
@@ -20,12 +19,12 @@ using UnityEngine.Serialization;
            collider = gameObject.GetComponents<Collider2D>();
         }
 
-        public void TakeDamage(int damage, Action enemyDamageBehaviour)
+        public void TakeDamage(int damage )
         {
             _life -= damage;
             KillEnemy();
-         
-            enemyDamageBehaviour.Invoke();
+           
+          
       
           
         }
@@ -39,7 +38,11 @@ using UnityEngine.Serialization;
                 {
                     col.enabled = false;
                 }
+              GetComponent<SlimeBehaviours>().StopPirsuitPlayer();
+              _rigidbody.linearVelocity = Vector2.zero;
                 GetComponent<Animator>().Play("die");
+                
+               
             }
         }
 

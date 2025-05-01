@@ -1,69 +1,71 @@
 using System.Collections;
 using Player;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemy
 {
     public class SlimeBehaviours: MonoBehaviour,IEnemyBehaviour
     {
+     
+  
+      
        
-        private readonly float _flashDuration = 0.1f;
-        private readonly float _flashCounter = 3;
-        private Rigidbody2D _rigidbody;
-        private Material _material;
-        private readonly Color _flashColor = new Color(255,255,255,0);
-        private Knockback _knockback;
-        private readonly float _knockbackThrust = 2f;
-        
+        public Transform target; 
+        private NavMeshAgent _agent;
+        public float detectionRadius = 2f;
+        private bool _isChasing = false;
+        private int _currentWaypointIndex = 0;
+        public Transform[] waypoints;
         void Start()
         {
-            _material = GetComponent<SpriteRenderer>().material;
-            _material.SetColor("_FlashColor", _flashColor);
-            _knockback = GetComponent<Knockback>();
-            _rigidbody = GetComponent<Rigidbody2D>();
+           
+            _agent = GetComponent<NavMeshAgent>();
+            _agent.updateRotation = false;
+            _agent.updateUpAxis = false;
+        }
+
+        void Update()
+        {
+            float distanceToPlayer = Vector2.Distance(transform.position, target.position);
+            if (distanceToPlayer <= detectionRadius)
+            {
+                _isChasing = true;
+               PirsuitPlayer();
+            }
+            else
+            {
+                if (_isChasing)
+                {
+                    _isChasing = false;
+                    GoToNextWaypoint();
+                }
+                if (!_agent.pathPending && _agent.remainingDistance < 0.1f)  GoToNextWaypoint();
+                
+
+            }
+
+        }
+        void GoToNextWaypoint()
+        {
+            if (waypoints.Length == 0)  return;
+
+            _agent.destination = waypoints[_currentWaypointIndex].position;
+            _currentWaypointIndex = (_currentWaypointIndex + 1) % waypoints.Length;
+            
+            if (_currentWaypointIndex > waypoints.Length)  _currentWaypointIndex = 0;
+            
         }
         
-        public void BehaviourTakingDamage()
-        {
-            StartCoroutine(DamageBehaviour());
-        }
-        public IEnumerator DamageBehaviour()
-        {
-            
-            for (int i = 0; i < _flashCounter; i++)
-            {
-                _material.SetFloat("_FlashAmount",1f);
-            
-                yield return new WaitForSeconds(_flashDuration);
-                _material.SetFloat("_FlashAmount",0f);
+   
 
-         
-                yield return new WaitForSeconds(_flashDuration);
-            }
-     
-        }
-
-        public void PirsuitPlayer()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void StopPirsuitPlayer()
-        {
-            throw new System.NotImplementedException();
-        }
+        public void PirsuitPlayer()=> _agent.SetDestination(target.position);
+        
+        public void StopPirsuitPlayer()=>target = null;
+        
 
 
-        public void KnockbackBehaviour()
-        {
-            StartCoroutine(KnockTime());
-        }
-        public IEnumerator KnockTime()
-        {
-            _knockback.GetKnockedBack(PlayerControl.Instance.transform,_knockbackThrust);
-            yield return new WaitForSeconds(0.2f);
-            _rigidbody.linearVelocity = Vector2.zero;
-        }
+        
       
     }
 }

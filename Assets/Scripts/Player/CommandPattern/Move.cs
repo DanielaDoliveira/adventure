@@ -6,7 +6,7 @@ namespace Player.CommandPattern
 {
     public class Move: MonoBehaviour, ICommand
     {
-        private readonly float _speed = 10f;
+        private readonly float _speed = 5f;
 
         private IPlayerAnimations _playerAnimations;
         [Inject]  public void  Construct (IPlayerAnimations playerAnimations) => _playerAnimations = playerAnimations;
