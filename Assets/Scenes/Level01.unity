@@ -273,7 +273,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1015
 --- !u!114 &140222023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,6 +614,7 @@ GameObject:
   - component: {fileID: 333034174}
   - component: {fileID: 333034176}
   - component: {fileID: 333034175}
+  - component: {fileID: 333034177}
   m_Layer: 0
   m_Name: NavMesh2D
   m_TagString: Untagged
@@ -683,6 +684,34 @@ MonoBehaviour:
   m_MinRegionArea: 0
   m_HideEditorLogs: 0
   m_NavMeshData: {fileID: 23800000, guid: d724c1f70a0d54535a22097c209ea7f8, type: 2}
+--- !u!114 &333034177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333034172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efdcc61dd80408248b8bfca364ef7f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verboseLogs: 0
+  gizmosOnSelected: 0
+  textStyle: 3
+  textAlignment: 0
+  customText: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4289967027
+  customIcon: 0
+  iconColor:
+    serializedVersion: 2
+    rgba: 4289967027
+  customHighlight: 1
+  highlightColor:
+    serializedVersion: 2
+    rgba: 4280032284
 --- !u!1 &335846442
 GameObject:
   m_ObjectHideFlags: 0
@@ -3519,6 +3548,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1140057642}
+  - component: {fileID: 1140057643}
   m_Layer: 0
   m_Name: Waypoints
   m_TagString: Untagged
@@ -3545,6 +3575,34 @@ Transform:
   - {fileID: 1186221422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1140057643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140057641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efdcc61dd80408248b8bfca364ef7f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  verboseLogs: 0
+  gizmosOnSelected: 0
+  textStyle: 3
+  textAlignment: 0
+  customText: 0
+  textColor:
+    serializedVersion: 2
+    rgba: 4289967027
+  customIcon: 0
+  iconColor:
+    serializedVersion: 2
+    rgba: 4289967027
+  customHighlight: 1
+  highlightColor:
+    serializedVersion: 2
+    rgba: 4280032284
 --- !u!1 &1171706079
 GameObject:
   m_ObjectHideFlags: 0
@@ -3668,7 +3726,7 @@ GameObject:
   - component: {fileID: 1187229658}
   - component: {fileID: 1187229657}
   m_Layer: 0
-  m_Name: SEPARATOR (1)
+  m_Name: AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4946,7 +5004,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1015
 --- !u!114 &1656969658
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7943,11 +8001,11 @@ GameObject:
   - component: {fileID: 2051298536}
   - component: {fileID: 2051298539}
   - component: {fileID: 2051298537}
+  - component: {fileID: 2051298533}
   - component: {fileID: 2051298534}
   - component: {fileID: 2051298535}
   - component: {fileID: 2051298540}
   - component: {fileID: 2051298541}
-  - component: {fileID: 2051298533}
   - component: {fileID: 2051298542}
   - component: {fileID: 2051298544}
   m_Layer: 9
@@ -8549,6 +8607,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2129094503}
   m_CullTransparentMesh: 1
+--- !u!1001 &4749716743315988860
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.2589269
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5323876
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.021732321
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4400790001476333871, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8508229572359848747, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
+      propertyPath: m_Name
+      value: TEMP
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 19801cd22bcea4f37bcead975ab182a6, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -8575,3 +8690,4 @@ SceneRoots:
   - {fileID: 1187229658}
   - {fileID: 333034174}
   - {fileID: 1140057642}
+  - {fileID: 4749716743315988860}
