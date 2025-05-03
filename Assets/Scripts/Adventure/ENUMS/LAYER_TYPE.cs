@@ -1,9 +1,9 @@
 
     public enum LAYER_TYPE
     {
-        DEFAULT = 0,
-        IDLE = 1,
-        RUNNING = 2,
-        ATTACKING = 3,
+       
+        IDLE = 0,
+        RUNNING = 1,
+        ATTACKING = 2,
             
     }

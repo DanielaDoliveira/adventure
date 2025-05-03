@@ -1,4 +1,6 @@
 
+using Adventure.Player;
+using Enemy;
 using Player;
 using UnityEngine;
 using Zenject;
@@ -10,5 +12,7 @@ using Zenject;
         {
             Container.Bind<IPlayerAnimations>().To<PlayerAnimations>().FromComponentInHierarchy().AsSingle();
           
+            Container.Bind<IEnemyBehaviour>().To<SlimeBehaviours>().FromComponentInHierarchy().AsSingle();
+            Container.Bind<PlayerState>().AsSingle();
         }
     }

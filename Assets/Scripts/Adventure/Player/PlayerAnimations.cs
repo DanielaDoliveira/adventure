@@ -1,56 +1,78 @@
-using Player.Singletons;
+using Adventure.Player;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 namespace Player
 {
     public class PlayerAnimations : MonoBehaviour, IPlayerAnimations
     {
         
-        public void SetAnimationMovement(LAYER_TYPE layer,Vector2 direction)
+        private PlayerState _playerState;
+        private int _currentLayer = -1;
+    
+        [Inject]
+        public void Construct( PlayerState playerState)=>_playerState = playerState;
+        
+        public void PlayMovementAnimation(LAYER_TYPE layer,Vector2 direction)
         {
-            PlayerSingleton.Animator.SetFloat("x_mov",direction.x);
-            PlayerSingleton.Animator.SetFloat("y_mov",direction.y);
+            
+            _playerState.Animator.SetFloat("x_mov",direction.x);
+             _playerState.Animator.SetFloat("y_mov",direction.y);
             CheckLayers(layer); 
         }
 
-        public void SetAnimationIdle(LAYER_TYPE layer, Vector2 direction)
+        public void PlayIdleAnimation(LAYER_TYPE layer, Vector2 direction)
         {
+            ResetAllLayers();
             CheckLayers(layer);
-            PlayerSingleton.Animator.SetFloat("last_direction_x",direction.x);
-            PlayerSingleton.Animator.SetFloat("last_direction_y",direction.y);
+             _playerState.Animator.SetFloat("last_direction_x",direction.x);
+             _playerState.Animator.SetFloat("last_direction_y",direction.y);
+          
         }
 
-        public void SetAnimationAttacking(LAYER_TYPE layer, Vector2 direction, bool isAttacking, GameObject attackCollider)
+        public void PlayAttackAnimation(LAYER_TYPE layer, Vector2 direction, bool isAttacking, GameObject attackCollider)
         {
+            ResetAllLayers();
             CheckLayers(layer);
             attackCollider.SetActive(true);
-            PlayerSingleton.Animator.SetFloat("last_direction_x", direction.x);
-            PlayerSingleton.Animator.SetFloat("last_direction_y", direction.y);
-            PlayerSingleton.Animator.SetBool("isAttacking", isAttacking);
+          
+            _playerState.Animator.SetFloat("last_direction_x", direction.x);
+            _playerState.Animator.SetFloat("last_direction_y", direction.y);
+            _playerState.Animator.SetBool("isAttacking", isAttacking);
+            
+            
         }
 
 
         public void FinishAttackAnimation( GameObject attackCollider)
         {
             attackCollider.SetActive(false);
-            PlayerSingleton.Animator.SetBool("isAttacking",false);
-            PlayerSingleton.Animator.SetLayerWeight(3,0);
+            
+            _playerState.Animator.SetBool("isAttacking", false);
+            _playerState.Animator.SetLayerWeight(2,0);
         }
 
         public void CheckLayers(LAYER_TYPE layer)
         {
+            
             int getLayer = layer.GetHashCode();
-            SetAllLayersToDefault();
-            PlayerSingleton.Animator.SetLayerWeight(getLayer,1);
+            if (_currentLayer != getLayer)
+            {
+                ResetAllLayers();
+                _playerState.Animator.SetLayerWeight(getLayer,1);
+                _currentLayer = getLayer;
+            }
+           
        
         }
 
-        public void SetAllLayersToDefault()
+        public void ResetAllLayers()
         {
-            PlayerSingleton.Animator.SetLayerWeight(0,0);
-            PlayerSingleton.Animator.SetLayerWeight(1,0);
-            PlayerSingleton.Animator.SetLayerWeight(2,0);
-            PlayerSingleton.Animator.SetLayerWeight(3,0);
+            for (int i = 0; i < _playerState.Animator.layerCount; i++)
+            {
+                _playerState.Animator.SetLayerWeight(i, 0);
+            }
         }
         
     }

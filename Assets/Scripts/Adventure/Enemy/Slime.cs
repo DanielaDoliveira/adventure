@@ -14,6 +14,7 @@ public class Slime : MonoBehaviour
    public Vector2 Position;
    public Vector2 PlayerPosition;
    private SlimeDamageEffect _damageEffect;
+
     void Start()
     { 
         Position = transform.position;

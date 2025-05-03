@@ -7,5 +7,5 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class SlimeDamageEffect: DamageEffect { }
+    public class SlimeDamageEffect: DamageEffect, IDamageEffect { }
 }

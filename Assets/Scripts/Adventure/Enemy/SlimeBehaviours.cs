@@ -74,7 +74,7 @@ namespace Enemy
 
         public void PirsuitPlayer()=> _agent.SetDestination(target.position);
         
-        public void StopPirsuitPlayer()=>target = null;
+        public virtual void StopPirsuitPlayer()=>target = null;
         
 
 

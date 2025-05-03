@@ -1,7 +1,9 @@
 
+using Enemy;
+
 namespace Player
 {
-    public class PlayerDamageEffect : DamageEffect
+    public class PlayerDamageEffect : DamageEffect, IDamageEffect
     {
        public static PlayerDamageEffect Instance;
        

@@ -3,12 +3,18 @@ using NUnit.Framework;
 
 namespace Adventure.Player.PlayerTest.Editor
 {
-    public class PlayerHealthModel_Tests
+    public class PlayerHealthModelTests
     {
+        private PlayerHealthModel model;
+        [SetUp]
+        public void Setup()
+        {
+            model = new PlayerHealthModel();
+        }
         [Test]
         public void SetInitialConfig()
         {
-            var model = new PlayerHealthModel();
+        
             model.SetPlayerHealthModel(100);
             Assert.AreEqual(100, model.maxLife);
             Assert.AreEqual(100, model.currentLife);
@@ -20,7 +26,7 @@ namespace Adventure.Player.PlayerTest.Editor
         
         public void ApplyDamage_ReducesLife(float damage)
         {
-            var model = new PlayerHealthModel();
+           
             model.SetPlayerHealthModel(100);
             model.ApplyDamage(damage);
             if(damage == 10)
@@ -35,7 +41,7 @@ namespace Adventure.Player.PlayerTest.Editor
         [Test]
         public void ApplyDamage_DoesNotGoBelowZero()
         {
-            var model = new PlayerHealthModel();
+           
             model.SetPlayerHealthModel(50);
             model.ApplyDamage(100);
             Assert.AreEqual(0, model.currentLife);
@@ -44,7 +50,7 @@ namespace Adventure.Player.PlayerTest.Editor
         [Test]
         public void IsDead_ReturnsTrueWhenLifeIsZeroOrLess()
         {
-            var model = new PlayerHealthModel();
+          
             model.SetPlayerHealthModel(100);
             model.ApplyDamage(105);
             Assert.IsTrue(model.isDead);
