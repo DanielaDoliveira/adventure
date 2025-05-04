@@ -8132,7 +8132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e92da6f7739647acb30d05fcb0bf247, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layers: 4
 --- !u!50 &2051298536
 Rigidbody2D:
   serializedVersion: 5

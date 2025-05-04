@@ -1,4 +1,5 @@
 
+using Adventure.Enemy.Interfaces;
 using Adventure.Player;
 using Enemy;
 using Player;
@@ -10,9 +11,11 @@ using Zenject;
         [SerializeField] private PlayerAnimations playerAnimations; 
         public override void InstallBindings()
         {
+            Container.Bind<PlayerState>().AsSingle();
             Container.Bind<IPlayerAnimations>().To<PlayerAnimations>().FromComponentInHierarchy().AsSingle();
           
-            Container.Bind<IEnemyBehaviour>().To<SlimeBehaviours>().FromComponentInHierarchy().AsSingle();
-            Container.Bind<PlayerState>().AsSingle();
+            // Container.Bind<IEnemyBehaviour>().To<SlimeBehaviours>().FromComponentInHierarchy().AsTransient();
+          
+          
         }
     }
