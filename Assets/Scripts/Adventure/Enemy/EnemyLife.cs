@@ -1,97 +1,105 @@
 
-using Adventure.Enemy.Interfaces;
-using Enemy;
 using Enemy.Model;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Zenject;
 
-[RequireComponent(typeof(Animator), typeof(Rigidbody2D))]
-public class EnemyLife: MonoBehaviour
-    {
-    
-       [Title("Death VFX Prefab")] [InfoBox("This particle cannot be null", InfoMessageType.Warning)]  [SerializeReference,ReadOnly]
-       private ParticleSystem deathVFXPrefab;
-
-       private readonly float _life = 23;
-        private Rigidbody2D _rigidbody;
-        private readonly float _timerToDestroy = 1f;
-        private Animator _animator;
-        private IEnemyBehaviour _behaviour;
+namespace Enemy
+{
         
-        private float _damageCooldown = 0.1f;
-        private float _lastDamageTime = -999f;
-        
-        [Title("Collider")][LabelText("Enemy colliders")]
-        [SerializeField] private Collider2D[] collider;
-        private bool _isDead = false;
- 
-        private EnemyLifeModel _lifeModel ;
-
-        
-        public void Init(EnemyLifeModel lifeModel, Rigidbody2D rb, Animator animator, IEnemyBehaviour behaviour)
+    [RequireComponent(typeof(Animator), typeof(Rigidbody2D))]
+    public class EnemyLife: MonoBehaviour
         {
-            _lifeModel = lifeModel;
-            _rigidbody = rb;
-            _animator = animator;
-            _behaviour = behaviour;
-        }
-        public bool IsDead => _isDead;
-        public float CurrentLife => _lifeModel.life;
-        protected virtual float CurrentTime => Time.time;
-        private void InitializeVFX()
-        {
-            deathVFXPrefab = GetComponentInChildren<ParticleSystem>();
-            deathVFXPrefab.Stop();
-        }
         
-         private void Awake()
+           private const float DefaultLife = 23f;
+            private const float timerToDestroy = 1f;
+            private const float damageCooldown = 0.1f;
+            
+           [Title("Death VFX Prefab")] [InfoBox("This particle cannot be null", InfoMessageType.Warning)]  [SerializeReference]
+           private ParticleSystem deathVFXPrefab;
+           [Title("Colliders")][LabelText("Enemy enemyColliderss")]
+           [SerializeField] private Collider2D[] enemyColliders;
+           
+           
+            private Rigidbody2D _rigidbody;
+            private Animator _animator;
+            private IEnemyBehaviour _behaviour;
+            private EnemyLifeModel _lifeModel ;
+            
+            private float _lastDamageTime = -999f;
+            private bool _isDead = false;
+            
+            public bool IsDead => _isDead;
+            public float CurrentLife => _lifeModel.life;
+            protected virtual float CurrentTime => Time.time;
+            public void Init(EnemyLifeModel lifeModel, Rigidbody2D rb, Animator animator, IEnemyBehaviour behaviour)
             {
-              
-                if (_rigidbody == null) _rigidbody = GetComponent<Rigidbody2D>();
-                if (_animator == null) _animator = GetComponent<Animator>();
-                if (_behaviour == null) _behaviour = GetComponent<IEnemyBehaviour>();
-                if (collider == null || collider.Length == 0) collider = GetComponents<Collider2D>();
-                if (_lifeModel == null) _lifeModel = new EnemyLifeModel(_life);
+                _lifeModel = lifeModel;
+                _rigidbody = rb;
+                _animator = animator;
+                _behaviour = behaviour;
+            }
+            private void InitializeVFX()
+            {
+                deathVFXPrefab = GetComponentInChildren<ParticleSystem>(); 
+                deathVFXPrefab.Stop();
+            }
+            
+             private void Awake()
+                {
+                  
+                    _rigidbody ??= GetComponent<Rigidbody2D>();
+                    _animator ??= GetComponent<Animator>();
+                    _behaviour ??= GetComponent<IEnemyBehaviour>();
+                    enemyColliders ??= GetComponents<Collider2D>();;
+                    _lifeModel ??= new EnemyLifeModel(DefaultLife);
 
+                }
+
+                private void Start() => InitializeVFX();          
+            
+
+            public void TakeDamage(int damage )
+            {
+                if (CannotTakeDamage()) return;
+                _lastDamageTime = Time.time;
+
+                if (_lifeModel.TakeDamage(damage)) HandleDeath();
+                   
+                
+                
+
+               
+                
+                
             }
 
-            private void Start() => InitializeVFX();          
-        
-
-        public void TakeDamage(int damage )
-        {
-            if (_isDead || CurrentTime - _lastDamageTime < _damageCooldown) return;
-            _lastDamageTime = Time.time;
-
-            if (_lifeModel.TakeDamage(damage))
+            private void HandleDeath()
             {
                 _isDead = true;
                 KillEnemy();
             }
             
+            private bool CannotTakeDamage()=> _isDead || CurrentTime - _lastDamageTime < damageCooldown;
 
-           
+            private void KillEnemy()
+            {
+                if (!_isDead) return;
             
-            
-        }
-        public void KillEnemy()
-        {
-            if (!_isDead) return;
-        
-            foreach (var col in collider)  col.enabled = false;
-            _behaviour?.StopPirsuitPlayer();
-            deathVFXPrefab.Play();
-            _rigidbody.linearVelocity = Vector2.zero;
-            _animator.Play("die");
-         
+                foreach (var col in enemyColliders)  col.enabled = false;
+                _behaviour?.StopPirsuitPlayer();
+                deathVFXPrefab.Play();
+                _rigidbody.linearVelocity = Vector2.zero;
+                _animator.Play("die");
+             
+                    
                 
+            }
+
+         
+            public void DestroyEnemyAfterDead()=>Destroy(gameObject,timerToDestroy);
             
+
+         
         }
 
-     
-        public void DestroyEnemyAfterDead()=>Destroy(gameObject,_timerToDestroy);
-        
-
-     
-    }
+}
