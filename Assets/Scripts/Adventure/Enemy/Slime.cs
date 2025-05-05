@@ -11,17 +11,18 @@ public class Slime : MonoBehaviour
    
    private EnemyLife _slimeLife;
    private SlimeBehaviours _slimeBehaviours;
+   private SlimeDamageEffect _damageEffect;
    public Vector2 Position;
    public Vector2 PlayerPosition;
-   private SlimeDamageEffect _damageEffect;
 
-    void Start()
+   void Start()
     { 
         Position = transform.position;
+        PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
         _playerAttackPower = 10;
-      _slimeLife = GetComponent<EnemyLife>();
-      _slimeBehaviours = GetComponent<SlimeBehaviours>();
-      _damageEffect = GetComponent<SlimeDamageEffect>();
+       _slimeLife = GetComponent<EnemyLife>();
+       _slimeBehaviours = GetComponent<SlimeBehaviours>();
+       _damageEffect = GetComponent<SlimeDamageEffect>();
 
 
     }
@@ -30,9 +31,8 @@ public class Slime : MonoBehaviour
 
     public void OnAttack()
     {
-        PlayerPosition = GameObject.FindGameObjectWithTag("Player").transform.position;
-     _damageEffect.TakeDamage(PlayerPosition, Color.blue);
-      _slimeLife.TakeDamage(_playerAttackPower);
+            _damageEffect.TakeDamage(PlayerPosition, Color.blue);
+            _slimeLife.TakeDamage(_playerAttackPower);
     }
 
 

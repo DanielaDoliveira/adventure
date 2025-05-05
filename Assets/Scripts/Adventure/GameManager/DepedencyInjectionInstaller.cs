@@ -1,5 +1,7 @@
 
 using Adventure.Enemy.Interfaces;
+using Adventure.GameManager;
+using Adventure.GameManager.Interfaces;
 using Adventure.Player;
 using Enemy;
 using Player;
@@ -13,7 +15,7 @@ using Zenject;
         {
             Container.Bind<PlayerState>().AsSingle();
             Container.Bind<IPlayerAnimations>().To<PlayerAnimations>().FromComponentInHierarchy().AsSingle();
-          
+            Container.Bind<IDialogueSystem>().To<DialogueSystem>().AsSingle();
             // Container.Bind<IEnemyBehaviour>().To<SlimeBehaviours>().FromComponentInHierarchy().AsTransient();
           
           

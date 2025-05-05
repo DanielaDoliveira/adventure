@@ -33,21 +33,42 @@ namespace Enemy
         private int _currentWaypointIndex = 0;
         
         public SlimeBehaviours(INavMeshAgent agent)=>_agent = agent;
-        
-        private bool IsPlayerInRange() => Vector2.Distance(transform.position, target.position) <= detectionRadius;
-        
-        void Awake()
-        {
-          
-            NavMeshAgent realAgent = GetComponent<NavMeshAgent>();
-            _agent = new NavMeshAgentAdapter(realAgent);
-        
-             _agent.updateRotation = false;
-             _agent.updateUpAxis = false;
-        }
 
-        void Update()
+        private bool IsPlayerInRange()
         {
+            if (target == null) return false;
+           return Vector2.Distance(transform.position, target.position) <= detectionRadius;
+        }
+        
+        void Start()
+        {
+
+            if (_agent == null)
+            {
+                var realAgent = GetComponent<NavMeshAgent>();
+                Initialize(new NavMeshAgentAdapter(realAgent));
+
+            }
+            if (target == null)
+            {
+                Debug.LogError("Target is not assigned. Please assign a target for the SlimeBehaviours.");
+            }
+            
+        }
+        public void Initialize(INavMeshAgent agent)
+        {
+            _agent = agent;
+            _agent.updateRotation = false;
+            _agent.updateUpAxis = false;
+        }
+        public void Update()
+        {
+            if (target == null)
+            {
+                Debug.LogWarning("Target is not assigned, skipping update.");
+                return; // Ou tratar de outra forma, se necessário
+            }
+
             if (IsPlayerInRange())   PirsuitPlayer();
             else Patrol();
         }
