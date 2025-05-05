@@ -1,4 +1,5 @@
 using System.Collections;
+using Adventure.Enemy.Interfaces;
 using Player;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,6 +9,8 @@ namespace Enemy
     public class SlimeBehaviours: MonoBehaviour,IEnemyBehaviour
     {
      
+        private INavMeshAgent _agent;
+        
   
       [BoxGroup("Pathfinding")]
        [Title("Player")]
@@ -28,52 +31,52 @@ namespace Enemy
          
         private bool _isChasing = false;
         private int _currentWaypointIndex = 0;
-
-        private NavMeshAgent _agent;
-        void Start()
+        
+        public SlimeBehaviours(INavMeshAgent agent)=>_agent = agent;
+        
+        private bool IsPlayerInRange() => Vector2.Distance(transform.position, target.position) <= detectionRadius;
+        
+        void Awake()
         {
-           
-            _agent = GetComponent<NavMeshAgent>();
-            _agent.updateRotation = false;
-            _agent.updateUpAxis = false;
+          
+            NavMeshAgent realAgent = GetComponent<NavMeshAgent>();
+            _agent = new NavMeshAgentAdapter(realAgent);
+        
+             _agent.updateRotation = false;
+             _agent.updateUpAxis = false;
         }
 
         void Update()
         {
-            float distanceToPlayer = Vector2.Distance(transform.position, target.position);
-            if (distanceToPlayer <= detectionRadius)
-            {
-                _isChasing = true;
-               PirsuitPlayer();
-            }
-            else
-            {
-                if (_isChasing)
-                {
-                    _isChasing = false;
-                    GoToNextWaypoint();
-                }
-                if (!_agent.pathPending && _agent.remainingDistance < 0.1f)  GoToNextWaypoint();
-                
-
-            }
-
+            if (IsPlayerInRange())   PirsuitPlayer();
+            else Patrol();
         }
         void GoToNextWaypoint()
         {
             if (waypoints.Length == 0)  return;
-
-            _agent.destination = waypoints[_currentWaypointIndex].position;
+            SetAgentDestinationToCurrentWaypoint();
             _currentWaypointIndex = (_currentWaypointIndex + 1) % waypoints.Length;
-            
             if (_currentWaypointIndex > waypoints.Length)  _currentWaypointIndex = 0;
             
         }
+        private void SetAgentDestinationToCurrentWaypoint()=>_agent.destination = waypoints[_currentWaypointIndex].position;
         
    
 
-        public void PirsuitPlayer()=> _agent.SetDestination(target.position);
-        
+        public void PirsuitPlayer()
+        {
+            _isChasing = true;
+            _agent.SetDestination(target.position);
+        }
+
+        public void Patrol()
+        {
+            
+            if (_isChasing) _isChasing = false;
+            
+            if (!_agent.pathPending && _agent.remainingDistance < 0.1f)  GoToNextWaypoint();
+        }
+
         public virtual void StopPirsuitPlayer()=>target = null;
         
 
