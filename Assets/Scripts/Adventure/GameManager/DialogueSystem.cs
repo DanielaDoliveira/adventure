@@ -7,13 +7,11 @@ namespace Adventure.GameManager
 {
     public class DialogueSystem : IDialogueSystem
     {
-      
-
-        public string message { get; set; }
      
-
-        public TextMeshProUGUI UnityText { get; set; }
-        public void SetText(TextMeshProUGUI unityText, string text)=>unityText.text = text;
+        public bool HasDisableButton { get; set; } = false;
+        
+       
+        public void ShowMessage(TextMeshProUGUI unityText, string message)=>unityText.text = message;
             
         
 
@@ -21,6 +19,6 @@ namespace Adventure.GameManager
         
 
         public void DisableBox(GameObject box)=>box.SetActive(false);
-        
+     
     }
 }
