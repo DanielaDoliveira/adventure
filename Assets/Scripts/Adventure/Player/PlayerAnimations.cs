@@ -16,9 +16,19 @@ namespace Player
         
         public void PlayMovementAnimation(LAYER_TYPE layer,Vector2 direction)
         {
-            
-            _playerState.Animator.SetFloat("x_mov",direction.x);
-             _playerState.Animator.SetFloat("y_mov",direction.y);
+            Vector2Int animDirection;
+
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
+            {
+                animDirection = new Vector2Int((int)Mathf.Sign(direction.x), 0);
+            }
+            else
+            {
+                animDirection = new Vector2Int(0, (int)Mathf.Sign(direction.y));
+            }
+
+            _playerState.Animator.SetFloat("x_mov",animDirection.x);
+             _playerState.Animator.SetFloat("y_mov",animDirection.y);
             CheckLayers(layer); 
         }
 
